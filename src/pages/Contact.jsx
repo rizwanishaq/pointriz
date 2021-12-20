@@ -14,13 +14,18 @@ function Contact() {
 
   useEffect(() => {
     const getLandlord = async () => {
-      const docRef = doc(db, "users", params.landlordId);
-      const docSnap = await getDoc(docRef);
+      try {
+        const docRef = doc(db, "users", params.landlordId);
+        console.log(params.landlordId);
+        const docSnap = await getDoc(docRef);
 
-      if (docSnap.exists()) {
-        setLandlord(docSnap.data());
-      } else {
-        toast.error("Could not get landlord data");
+        if (docSnap.exists()) {
+          setLandlord(docSnap.data());
+        } else {
+          toast.error("Could not get landlord data");
+        }
+      } catch (error) {
+        toast.error(error);
       }
     };
 
